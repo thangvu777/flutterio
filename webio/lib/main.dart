@@ -18,11 +18,38 @@ void main() {
   );
 }
 
+// Custom page transitions builder with no animation
+class NoAnimationPageTransitionsBuilder extends PageTransitionsBuilder {
+  const NoAnimationPageTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return child; // Instantly return the child widget without any transition
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    const pageTransitionsTheme = PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: NoAnimationPageTransitionsBuilder(),
+        TargetPlatform.iOS: NoAnimationPageTransitionsBuilder(),
+        TargetPlatform.windows: NoAnimationPageTransitionsBuilder(),
+        TargetPlatform.macOS: NoAnimationPageTransitionsBuilder(),
+        TargetPlatform.linux: NoAnimationPageTransitionsBuilder(),
+        TargetPlatform.fuchsia: NoAnimationPageTransitionsBuilder(),
+      },
+    );
+
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         return MaterialApp(
@@ -33,6 +60,7 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             cardColor: Colors.white,
             scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+            pageTransitionsTheme: pageTransitionsTheme,
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
@@ -40,6 +68,7 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             cardColor: const Color(0xFF2C2C2C),
             scaffoldBackgroundColor: const Color(0xFF121212),
+            pageTransitionsTheme: pageTransitionsTheme,
           ),
           themeMode: themeProvider.themeMode,
           initialRoute: '/',
