@@ -30,3 +30,17 @@ go.work.sum
 # Editor/IDE
 .idea/
 # .vscode/
+
+# Flutter/Dart generated files
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
+# Ignore generated plugin registration files
+**/generated_plugin_registrant.*
+**/generated_plugins.cmake
+
+# Package files
+.packages
+pubspec.lock
